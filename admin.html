@@ -1,402 +1,123 @@
 <!DOCTYPE html>
 <html lang="pt">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel de Administração</title>
-    <link rel="stylesheet" href="style.css" />
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
-  </head>
-  <body>
+    <link rel="stylesheet" href="style.css">
+    <!-- Firebase v9 (Modular) -->
+    <script type="module" src="script.js"></script>
+</head>
+<body>
     <header class="admin-header">
-      <div class="container">
-        <div class="admin-nav">
-          <h2>Painel de Administração</h2>
-          <button class="login-btn" onclick="window.location.href='index.html'">
-            Sair
-          </button>
+        <div class="container">
+            <div class="admin-nav">
+                <h2>Painel de Administração</h2>
+                <button class="login-btn" onclick="window.location.href='index.html'">Sair</button>
+            </div>
         </div>
-      </div>
     </header>
 
     <main class="admin-main">
-      <h2>Dashboard</h2>
-
-      <!-- Adicionar Notícia -->
-      <div class="admin-card">
-        <h3>Adicionar Nova Notícia</h3>
-        <form id="addNewsForm">
-          <div class="form-group">
-            <label for="news-title">Título</label>
-            <input type="text" id="news-title" class="form-control" required />
-          </div>
-          <div class="form-group">
-            <label for="news-content">Conteúdo</label>
-            <textarea
-              id="news-content"
-              class="form-control"
-              rows="6"
-              required
-            ></textarea>
-          </div>
-          <button type="submit" class="form-btn">Publicar Notícia</button>
-        </form>
-      </div>
-
-      <!-- Listar Notícias -->
-      <div class="admin-card">
-        <h3>Notícias Publicadas</h3>
-        <table class="table" id="newsTable">
-          <thead>
-            <tr>
-              <th>Título</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Notícias serão carregadas aqui -->
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Adicionar Evento -->
-      <div class="admin-card">
-        <h3>Adicionar Novo Evento</h3>
-        <form id="addEventForm">
-          <div class="form-group">
-            <label for="event-title">Título</label>
-            <input type="text" id="event-title" class="form-control" required />
-          </div>
-          <div class="form-group">
-            <label for="event-date">Data</label>
-            <input type="date" id="event-date" class="form-control" required />
-          </div>
-          <div class="form-group">
-            <label for="event-content">Descrição</label>
-            <textarea
-              id="event-content"
-              class="form-control"
-              rows="6"
-              required
-            ></textarea>
-          </div>
-          <button type="submit" class="form-btn">Adicionar Evento</button>
-        </form>
-      </div>
-
-      <!-- Listar Eventos -->
-      <div class="admin-card">
-        <h3>Eventos Publicados</h3>
-        <table class="table" id="eventsTable">
-          <thead>
-            <tr>
-              <th>Título</th>
-              <th>Data</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Eventos serão carregados aqui -->
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Adicionar Fotos -->
-      <div class="admin-card">
-        <h3>Adicionar Fotos à Galeria</h3>
-        <form id="addGalleryForm">
-          <div class="form-group">
-            <label for="gallery-category">Categoria</label>
-            <select id="gallery-category" class="form-control" required>
-              <option value="natal">Natal</option>
-              <option value="magusto">Magusto</option>
-              <option value="passeios">Passeios</option>
-              <option value="desporto">Desporto</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="gallery-images">Imagens</label>
-            <input
-              type="file"
-              id="gallery-images"
-              class="form-control"
-              multiple
-              required
-            />
-          </div>
-          <button type="submit" class="form-btn">Carregar Fotos</button>
-        </form>
-      </div>
-
-      <!-- Listar Fotos -->
-      <div class="admin-card">
-        <h3>Fotos na Galeria</h3>
-        <div class="gallery-grid" id="adminGalleryGrid">
-          <!-- Fotos serão carregadas aqui -->
-        </div>
-      </div>
-    </main>
-
-    <script>
-      // Importe as funções necessárias do Firebase
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-      import {
-        getFirestore,
-        collection,
-        addDoc,
-        getDocs,
-        doc,
-        deleteDoc,
-        updateDoc,
-      } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-
-      // Configuração do Firebase
-      const firebaseConfig = {
-        apiKey: "AIzaSyBgWfCi3NnhHaiZfc23oD2ke39Qs1FJ5So",
-        authDomain: "edpguimaraes-e73f8.firebaseapp.com",
-        projectId: "edpguimaraes-e73f8",
-        storageBucket: "edpguimaraes-e73f8.appspot.com",
-        messagingSenderId: "162429006984",
-        appId: "1:162429006984:web:09447878beb76e96a8db3d",
-        measurementId: "G-M0H73YGP4G",
-      };
-
-      // Inicialize o Firebase
-      const app = initializeApp(firebaseConfig);
-      const db = getFirestore(app);
-
-      // Função para carregar notícias
-      async function loadNews() {
-        const newsTable = document
-          .getElementById("newsTable")
-          .getElementsByTagName("tbody")[0];
-        const querySnapshot = await getDocs(collection(db, "news"));
-        newsTable.innerHTML = "";
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          newsTable.innerHTML += `
-            <tr>
-                <td>${data.title}</td>
-                <td>
-                    <button onclick="editNews('${doc.id}')">Editar</button>
-                    <button onclick="deleteNews('${doc.id}')">Apagar</button>
-                </td>
-            </tr>
-        `;
-        });
-      }
-
-      // Função para adicionar notícia
-      document
-        .getElementById("addNewsForm")
-        .addEventListener("submit", async function (event) {
-          event.preventDefault();
-          const title = document.getElementById("news-title").value;
-          const content = document.getElementById("news-content").value;
-
-          try {
-            await addDoc(collection(db, "news"), { title, content });
-            alert("Notícia adicionada com sucesso!");
-            loadNews(); // Recarrega as notícias após adicionar
-          } catch (error) {
-            console.error("Erro ao adicionar notícia: ", error);
-            alert(
-              "Erro ao adicionar notícia. Verifique o console para mais detalhes."
-            );
-          }
-        });
-
-      // Função para apagar notícia
-      window.deleteNews = async function (id) {
-        if (confirm("Tem certeza que deseja apagar esta notícia?")) {
-          try {
-            await deleteDoc(doc(db, "news", id));
-            alert("Notícia apagada com sucesso!");
-            loadNews(); // Recarrega as notícias após apagar
-          } catch (error) {
-            console.error("Erro ao apagar notícia: ", error);
-            alert(
-              "Erro ao apagar notícia. Verifique o console para mais detalhes."
-            );
-          }
-        }
-      };
-
-      // Função para editar notícia
-      window.editNews = async function (id) {
-        const newTitle = prompt("Digite o novo título:");
-        const newContent = prompt("Digite o novo conteúdo:");
-
-        if (newTitle && newContent) {
-          try {
-            await updateDoc(doc(db, "news", id), {
-              title: newTitle,
-              content: newContent,
-            });
-            alert("Notícia editada com sucesso!");
-            loadNews(); // Recarrega as notícias após editar
-          } catch (error) {
-            console.error("Erro ao editar notícia: ", error);
-            alert(
-              "Erro ao editar notícia. Verifique o console para mais detalhes."
-            );
-          }
-        }
-      };
-
-      // Função para carregar eventos
-      async function loadEvents() {
-        const eventsTable = document
-          .getElementById("eventsTable")
-          .getElementsByTagName("tbody")[0];
-        const querySnapshot = await getDocs(collection(db, "events"));
-        eventsTable.innerHTML = "";
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          eventsTable.innerHTML += `
-            <tr>
-                <td>${data.title}</td>
-                <td>${data.date}</td>
-                <td>
-                    <button onclick="editEvent('${doc.id}')">Editar</button>
-                    <button onclick="deleteEvent('${doc.id}')">Apagar</button>
-                </td>
-            </tr>
-        `;
-        });
-      }
-
-      // Função para adicionar evento
-      document
-        .getElementById("addEventForm")
-        .addEventListener("submit", async function (event) {
-          event.preventDefault();
-          const title = document.getElementById("event-title").value;
-          const date = document.getElementById("event-date").value;
-          const content = document.getElementById("event-content").value;
-
-          try {
-            await addDoc(collection(db, "events"), { title, date, content });
-            alert("Evento adicionado com sucesso!");
-            loadEvents(); // Recarrega os eventos após adicionar
-          } catch (error) {
-            console.error("Erro ao adicionar evento: ", error);
-            alert(
-              "Erro ao adicionar evento. Verifique o console para mais detalhes."
-            );
-          }
-        });
-
-      // Função para apagar evento
-      window.deleteEvent = async function (id) {
-        if (confirm("Tem certeza que deseja apagar este evento?")) {
-          try {
-            await deleteDoc(doc(db, "events", id));
-            alert("Evento apagado com sucesso!");
-            loadEvents(); // Recarrega os eventos após apagar
-          } catch (error) {
-            console.error("Erro ao apagar evento: ", error);
-            alert(
-              "Erro ao apagar evento. Verifique o console para mais detalhes."
-            );
-          }
-        }
-      };
-
-      // Função para editar evento
-      window.editEvent = async function (id) {
-        const newTitle = prompt("Digite o novo título:");
-        const newDate = prompt("Digite a nova data (YYYY-MM-DD):");
-        const newContent = prompt("Digite a nova descrição:");
-
-        if (newTitle && newDate && newContent) {
-          try {
-            await updateDoc(doc(db, "events", id), {
-              title: newTitle,
-              date: newDate,
-              content: newContent,
-            });
-            alert("Evento editado com sucesso!");
-            loadEvents(); // Recarrega os eventos após editar
-          } catch (error) {
-            console.error("Erro ao editar evento: ", error);
-            alert(
-              "Erro ao editar evento. Verifique o console para mais detalhes."
-            );
-          }
-        }
-      };
-
-      // Função para carregar galeria
-      async function loadGallery() {
-        const adminGalleryGrid = document.getElementById("adminGalleryGrid");
-        const querySnapshot = await getDocs(collection(db, "gallery"));
-        adminGalleryGrid.innerHTML = "";
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          adminGalleryGrid.innerHTML += `
-            <div class="gallery-item" data-category="${data.category}">
-                <img src="${data.image}" alt="${data.category}">
-                <div class="gallery-item-overlay">
-                    <h4>${data.category}</h4>
-                    <button onclick="deletePhoto('${doc.id}')">Remover</button>
+        <h2>Dashboard</h2>
+        
+        <!-- Adicionar Notícia -->
+        <div class="admin-card">
+            <h3>Adicionar Nova Notícia</h3>
+            <form id="addNewsForm">
+                <div class="form-group">
+                    <label for="news-title">Título</label>
+                    <input type="text" id="news-title" class="form-control" required>
                 </div>
+                <div class="form-group">
+                    <label for="news-content">Conteúdo</label>
+                    <textarea id="news-content" class="form-control" rows="6" required></textarea>
+                </div>
+                <button type="submit" class="form-btn">Publicar Notícia</button>
+            </form>
+        </div>
+
+        <!-- Listar Notícias -->
+        <div class="admin-card">
+            <h3>Notícias Publicadas</h3>
+            <table class="table" id="newsTable">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Notícias serão carregadas aqui -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Adicionar Evento -->
+        <div class="admin-card">
+            <h3>Adicionar Novo Evento</h3>
+            <form id="addEventForm">
+                <div class="form-group">
+                    <label for="event-title">Título</label>
+                    <input type="text" id="event-title" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="event-date">Data</label>
+                    <input type="date" id="event-date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="event-content">Descrição</label>
+                    <textarea id="event-content" class="form-control" rows="6" required></textarea>
+                </div>
+                <button type="submit" class="form-btn">Adicionar Evento</button>
+            </form>
+        </div>
+
+        <!-- Listar Eventos -->
+        <div class="admin-card">
+            <h3>Eventos Publicados</h3>
+            <table class="table" id="eventsTable">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Data</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Eventos serão carregados aqui -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Adicionar Fotos -->
+        <div class="admin-card">
+            <h3>Adicionar Fotos à Galeria</h3>
+            <form id="addGalleryForm">
+                <div class="form-group">
+                    <label for="gallery-category">Categoria</label>
+                    <select id="gallery-category" class="form-control" required>
+                        <option value="natal">Natal</option>
+                        <option value="magusto">Magusto</option>
+                        <option value="passeios">Passeios</option>
+                        <option value="desporto">Desporto</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="gallery-images">Imagens</label>
+                    <input type="file" id="gallery-images" class="form-control" multiple required>
+                </div>
+                <button type="submit" class="form-btn">Carregar Fotos</button>
+            </form>
+        </div>
+
+        <!-- Listar Fotos -->
+        <div class="admin-card">
+            <h3>Fotos na Galeria</h3>
+            <div class="gallery-grid" id="adminGalleryGrid">
+                <!-- Fotos serão carregadas aqui -->
             </div>
-        `;
-        });
-      }
-
-      // Função para adicionar fotos à galeria
-      document
-        .getElementById("addGalleryForm")
-        .addEventListener("submit", async function (event) {
-          event.preventDefault();
-          const category = document.getElementById("gallery-category").value;
-          const images = document.getElementById("gallery-images").files;
-
-          Array.from(images).forEach((image) => {
-            const reader = new FileReader();
-            reader.onload = async function (e) {
-              try {
-                await addDoc(collection(db, "gallery"), {
-                  category,
-                  image: e.target.result,
-                });
-                alert("Fotos carregadas com sucesso!");
-                loadGallery(); // Recarrega a galeria após adicionar
-              } catch (error) {
-                console.error("Erro ao carregar foto: ", error);
-                alert(
-                  "Erro ao carregar foto. Verifique o console para mais detalhes."
-                );
-              }
-            };
-            reader.readAsDataURL(image);
-          });
-        });
-
-      // Função para remover foto
-      window.deletePhoto = async function (id) {
-        if (confirm("Tem certeza que deseja remover esta foto?")) {
-          try {
-            await deleteDoc(doc(db, "gallery", id));
-            alert("Foto removida com sucesso!");
-            loadGallery(); // Recarrega a galeria após remover
-          } catch (error) {
-            console.error("Erro ao remover foto: ", error);
-            alert(
-              "Erro ao remover foto. Verifique o console para mais detalhes."
-            );
-          }
-        }
-      };
-
-      // Carregar dados ao abrir a página
-      loadNews();
-      loadEvents();
-      loadGallery();
-    </script>
-  </body>
+        </div>
+    </main>
+</body>
 </html>
