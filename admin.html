@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Administração</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="admin-header">
+        <div class="container">
+            <div class="admin-nav">
+                <h2>Painel de Administração</h2>
+                <button class="login-btn" onclick="window.location.href='index.html'">Sair</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="admin-main">
+        <h2>Dashboard</h2>
+        
+        <!-- Adicionar Notícia -->
+        <div class="admin-card">
+            <h3>Adicionar Nova Notícia</h3>
+            <form id="addNewsForm">
+                <div class="form-group">
+                    <label for="news-title">Título</label>
+                    <input type="text" id="news-title" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="news-content">Conteúdo</label>
+                    <textarea id="news-content" class="form-control" rows="6" required></textarea>
+                </div>
+                <button type="submit" class="form-btn">Publicar Notícia</button>
+            </form>
+        </div>
+
+        <!-- Adicionar Evento -->
+        <div class="admin-card">
+            <h3>Adicionar Novo Evento</h3>
+            <form id="addEventForm">
+                <div class="form-group">
+                    <label for="event-title">Título</label>
+                    <input type="text" id="event-title" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="event-date">Data</label>
+                    <input type="date" id="event-date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="event-content">Descrição</label>
+                    <textarea id="event-content" class="form-control" rows="6" required></textarea>
+                </div>
+                <button type="submit" class="form-btn">Adicionar Evento</button>
+            </form>
+        </div>
+
+        <!-- Adicionar Fotos -->
+        <div class="admin-card">
+            <h3>Adicionar Fotos à Galeria</h3>
+            <form id="addGalleryForm">
+                <div class="form-group">
+                    <label for="gallery-category">Categoria</label>
+                    <select id="gallery-category" class="form-control" required>
+                        <option value="natal">Natal</option>
+                        <option value="magusto">Magusto</option>
+                        <option value="passeios">Passeios</option>
+                        <option value="desporto">Desporto</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="gallery-images">Imagens</label>
+                    <input type="file" id="gallery-images" class="form-control" multiple required>
+                </div>
+                <button type="submit" class="form-btn">Carregar Fotos</button>
+            </form>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

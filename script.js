@@ -1,28 +1,94 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Filtros da galeria
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const galleryItems = document.querySelectorAll('.gallery-item');
-    
-    filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Remover classe ativa de todos os botões
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            
-            // Adicionar classe ativa ao botão clicado
-            this.classList.add('active');
-            
-            // Obter a categoria do botão clicado
-            const category = this.textContent.toLowerCase();
-            
-            // Mostrar ou ocultar itens da galeria com base na categoria
-            galleryItems.forEach(item => {
-                const itemCategory = item.getAttribute('data-category');
-                if (category === 'todos' || itemCategory === category) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        });
+    // Função para carregar notícias
+    function loadNews() {
+        const newsGrid = document.getElementById('newsGrid');
+        const news = JSON.parse(localStorage.getItem('news')) || [];
+        newsGrid.innerHTML = news.map(item => `
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="card-title">${item.title}</h3>
+                    <p class="card-text">${item.content}</p>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Função para carregar eventos
+    function loadEvents() {
+        const eventsGrid = document.getElementById('eventsGrid');
+        const events = JSON.parse(localStorage.getItem('events')) || [];
+        eventsGrid.innerHTML = events.map(item => `
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="card-title">${item.title}</h3>
+                    <p class="card-text">${item.content}</p>
+                    <span class="card-date">${item.date}</span>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Função para carregar galeria
+    function loadGallery() {
+        const galleryGrid = document.getElementById('galleryGrid');
+        const gallery = JSON.parse(localStorage.getItem('gallery')) || [];
+        galleryGrid.innerHTML = gallery.map(item => `
+            <div class="gallery-item" data-category="${item.category}">
+                <img src="${item.image}" alt="${item.category}">
+                <div class="gallery-item-overlay">
+                    <h4>${item.category}</h4>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Carregar dados ao abrir a página
+    loadNews();
+    loadEvents();
+    loadGallery();
+
+    // Adicionar notícia
+    document.getElementById('addNewsForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const title = document.getElementById('news-title').value;
+        const content = document.getElementById('news-content').value;
+        const news = JSON.parse(localStorage.getItem('news')) || [];
+        news.push({ title, content });
+        localStorage.setItem('news', JSON.stringify(news));
+        alert('Notícia adicionada com sucesso!');
+        loadNews();
+    });
+
+    // Adicionar evento
+    document.getElementById('addEventForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const title = document.getElementById('event-title').value;
+        const date = document.getElementById('event-date').value;
+        const content = document.getElementById('event-content').value;
+        const events = JSON.parse(localStorage.getItem('events')) || [];
+        events.push({ title, date, content });
+        localStorage.setItem('events', JSON.stringify(events));
+        alert('Evento adicionado com sucesso!');
+        loadEvents();
+    });
+
+    // Adicionar fotos à galeria
+    document.getElementById('addGalleryForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const category = document.getElementById('gallery-category').value;
+        const images = document.getElementById('gallery-images').files;
+        const gallery = JSON.parse(localStorage.getItem('gallery')) || [];
+
+        for (let i = 0; i < images.length; i++) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                gallery.push({ category, image: e.target.result });
+                localStorage.setItem('gallery', JSON.stringify(gallery));
+                loadGallery();
+            };
+            reader.readAsDataURL(images[i]);
+        }
+
+        alert('Fotos carregadas com sucesso!');
     });
 });

@@ -16,11 +16,10 @@
                 <nav>
                     <ul>
                         <li><a href="index.html">Início</a></li>
-                        <li><a href="noticias.html">Notícias</a></li>
-                        <li><a href="eventos.html">Eventos</a></li>
-                        <li><a href="comunicados.html">Comunicados</a></li>
-                        <li><a href="galeria.html">Galeria</a></li>
-                        <li><a href="sobre.html">Sobre Nós</a></li>
+                        <li><a href="#noticias">Notícias</a></li>
+                        <li><a href="#eventos">Eventos</a></li>
+                        <li><a href="#galeria">Galeria</a></li>
+                        <li><a href="#sobre">Sobre Nós</a></li>
                     </ul>
                 </nav>
                 <button class="login-btn" onclick="window.location.href='login.html'">Admin</button>
@@ -38,120 +37,20 @@
     <main class="main-content">
         <div class="container">
             <!-- Notícias Recentes -->
-            <h2 class="section-title">Notícias Recentes</h2>
-            <div class="news-grid">
-                <div class="card">
-                    <img src="https://via.placeholder.com/400x200" alt="Notícia" class="card-img">
-                    <div class="card-content">
-                        <span class="card-date">15 de Março, 2025</span>
-                        <h3 class="card-title">Nova Direção Tomou Posse</h3>
-                        <p class="card-text">A nova direção do Clube do Pessoal EDP - Delegação Guimarães tomou posse no passado sábado...</p>
-                        <a href="#" class="card-btn">Ler mais</a>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="https://via.placeholder.com/400x200" alt="Notícia" class="card-img">
-                    <div class="card-content">
-                        <span class="card-date">10 de Março, 2025</span>
-                        <h3 class="card-title">Inscrições Abertas para Torneio de Futsal</h3>
-                        <p class="card-text">Estão abertas as inscrições para o torneio anual de futsal que decorrerá no próximo mês...</p>
-                        <a href="#" class="card-btn">Ler mais</a>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="https://via.placeholder.com/400x200" alt="Notícia" class="card-img">
-                    <div class="card-content">
-                        <span class="card-date">1 de Março, 2025</span>
-                        <h3 class="card-title">Renovação das Instalações</h3>
-                        <p class="card-text">Concluídas as obras de renovação das instalações. Venha conhecer os novos espaços...</p>
-                        <a href="#" class="card-btn">Ler mais</a>
-                    </div>
-                </div>
-            </div>
+            <h2 class="section-title" id="noticias">Notícias Recentes</h2>
+            <div class="news-grid" id="newsGrid"></div>
 
             <!-- Próximos Eventos -->
-            <h2 class="section-title">Próximos Eventos</h2>
-            <div class="events-grid">
-                <div class="card">
-                    <img src="https://via.placeholder.com/400x200" alt="Evento" class="card-img">
-                    <div class="card-content">
-                        <span class="card-date">20 de Março, 2025</span>
-                        <h3 class="card-title">Jantar de Primavera</h3>
-                        <p class="card-text">Junte-se a nós para celebrar a chegada da primavera com um jantar especial...</p>
-                        <a href="#" class="card-btn">Mais informações</a>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="https://via.placeholder.com/400x200" alt="Evento" class="card-img">
-                    <div class="card-content">
-                        <span class="card-date">5 de Abril, 2025</span>
-                        <h3 class="card-title">Caminhada na Serra da Penha</h3>
-                        <p class="card-text">Inscreva-se para participar na caminhada anual pela Serra da Penha...</p>
-                        <a href="#" class="card-btn">Mais informações</a>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="https://via.placeholder.com/400x200" alt="Evento" class="card-img">
-                    <div class="card-content">
-                        <span class="card-date">15 de Abril, 2025</span>
-                        <h3 class="card-title">Workshop de Fotografia</h3>
-                        <p class="card-text">Aprenda técnicas básicas de fotografia neste workshop exclusivo para sócios...</p>
-                        <a href="#" class="card-btn">Mais informações</a>
-                    </div>
-                </div>
-            </div>
+            <h2 class="section-title" id="eventos">Próximos Eventos</h2>
+            <div class="events-grid" id="eventsGrid"></div>
 
             <!-- Galeria de Imagens -->
-            <h2 class="section-title">Galeria de Fotos</h2>
-            <div class="gallery-filters">
-                <button class="filter-btn active">Todos</button>
-                <button class="filter-btn">Natal</button>
-                <button class="filter-btn">Magusto</button>
-                <button class="filter-btn">Passeios</button>
-                <button class="filter-btn">Desporto</button>
-            </div>
-            <div class="gallery-grid">
-                <div class="gallery-item" data-category="natal">
-                    <img src="https://via.placeholder.com/400x300" alt="Festa de Natal">
-                    <div class="gallery-item-overlay">
-                        <h4>Festa de Natal 2024</h4>
-                    </div>
-                </div>
-                <div class="gallery-item" data-category="magusto">
-                    <img src="https://via.placeholder.com/400x300" alt="Magusto">
-                    <div class="gallery-item-overlay">
-                        <h4>Magusto 2024</h4>
-                    </div>
-                </div>
-                <div class="gallery-item" data-category="passeios">
-                    <img src="https://via.placeholder.com/400x300" alt="Passeio">
-                    <div class="gallery-item-overlay">
-                        <h4>Passeio a Ponte de Lima</h4>
-                    </div>
-                </div>
-                <div class="gallery-item" data-category="desporto">
-                    <img src="https://via.placeholder.com/400x300" alt="Desporto">
-                    <div class="gallery-item-overlay">
-                        <h4>Torneio de Futsal 2024</h4>
-                    </div>
-                </div>
-                <div class="gallery-item" data-category="natal">
-                    <img src="https://via.placeholder.com/400x300" alt="Festa de Natal">
-                    <div class="gallery-item-overlay">
-                        <h4>Distribuição de Presentes - Natal 2024</h4>
-                    </div>
-                </div>
-                <div class="gallery-item" data-category="passeios">
-                    <img src="https://via.placeholder.com/400x300" alt="Passeio">
-                    <div class="gallery-item-overlay">
-                        <h4>Visita às Caves do Vinho do Porto</h4>
-                    </div>
-                </div>
-            </div>
+            <h2 class="section-title" id="galeria">Galeria de Fotos</h2>
+            <div class="gallery-grid" id="galleryGrid"></div>
         </div>
     </main>
 
-    <footer>
+    <footer id="sobre">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
@@ -164,13 +63,6 @@
                     <p>4800-000 Guimarães</p>
                     <p>clube.edp.guimaraes@edp.pt</p>
                     <p>+351 253 000 000</p>
-                </div>
-                <div class="footer-column">
-                    <h3>Links Úteis</h3>
-                    <a href="#">EDP Portugal</a>
-                    <a href="#">Clube do Pessoal EDP Nacional</a>
-                    <a href="#">Delegações</a>
-                    <a href="#">Política de Privacidade</a>
                 </div>
             </div>
             <div class="copyright">
