@@ -1,3 +1,7 @@
+// Importe as funções necessárias do Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
 // Configuração do Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyBgWfCi3NnhHaiZfc23oD2ke39Qs1FJ5So",
